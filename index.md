@@ -1,6 +1,6 @@
-## “Torture the data, and it will confess to anything.”
+## "If you torture the data long enough, it will confess to anything" - Ronald H.Coase
 
- <img src="posts/images/avatar.bmp" alt="avatar"  class="center" style="width:400x;height:400px;"> 
+![avatar](/posts/images/avatar.bmp)
 
 Hi! My name is Omar, and I was born in Ibiza (Spain) in 1996.
 I studied Computer Science at Barcelona School of Informatics, a faculty of Universitat Politecnica de Catalunya, where I choose the Computation branch.
