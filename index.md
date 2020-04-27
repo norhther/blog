@@ -1,6 +1,6 @@
-## Welcome to my personal blog
+## “Torture the data, and it will confess to anything.”
 
- <img src="posts/images/avatar.bmp" alt="avatar"  class="center" style="width:250px;height:400px;"> 
+ <img src="posts/images/avatar.bmp" alt="avatar"  class="center" style="width:400x;height:400px;"> 
 
 Hi! My name is Omar, and I was born in Ibiza (Spain) in 1996.
 I studied Computer Science at Barcelona School of Informatics, a faculty of Universitat Politecnica de Catalunya, where I choose the Computation branch.
