@@ -1,6 +1,6 @@
 ## Presentation
 
-![myself](/posts/images/avatar.bmp =400x400)
+![myself](/posts/images/avatar.bmp){height=400px width=400px}
 
 Hi! My name is Omar, and I was born in Ibiza (Spain) in 1996.
 I studied Computer Science at Barcelona School of Informatics, a faculty of Universitat Politecnica de Catalunya, where I choose the Computation branch.
