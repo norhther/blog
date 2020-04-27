@@ -1,6 +1,6 @@
 ## Presentation
 <p align="center">
-    <img src="/posts/images/avatar.bmp" width="250px" height="250px" >
+    <img src=/posts/images/avatar.bmp width="250" height="250">
 </p>
 
 Hi! My name is Omar, and I was born in Ibiza (Spain) in 1996.
