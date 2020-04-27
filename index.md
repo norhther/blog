@@ -1,9 +1,11 @@
 ## Welcome to my personal blog
 
-My name is Omar López Rubio. I was born in Ibiza (Spain) in 1996.
+ <img src="/images/avatar.bpm" alt="Computer Man" style="width:250px;height:400px;"> 
+
+My name is Omar, and I was born in Ibiza (Spain) in 1996.
 I studied Computer Science at Barcelona School of Informatics, a faculty of Universitat Politecnica de Catalunya, where I choose the Computation branch.
 
-My main interests right now are Statistics, Data Science (exploratory analyisis, visualization, etc.) and also Machine Learning modeling.
+My main interests right are Statistics, Data Science (exploratory analyisis, visualization, etc.) and also Machine Learning modeling.
 
 I have been teaching for 2 years now numerous languages to college students, including C, C++, Java, Python and R. Also I have conducted several courses in algorithmics and complexity analysis.
 
