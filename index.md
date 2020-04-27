@@ -1,6 +1,6 @@
 ## Welcome to my personal blog
 
- <img src="/images/avatar.bpm" alt="Computer Man" style="width:250px;height:400px;"> 
+ <img src="/posts/images/avatar.bpm" alt="Computer Man" style="width:250px;height:400px;"> 
 
 My name is Omar, and I was born in Ibiza (Spain) in 1996.
 I studied Computer Science at Barcelona School of Informatics, a faculty of Universitat Politecnica de Catalunya, where I choose the Computation branch.
