@@ -5,14 +5,23 @@
   margin-right: auto;
 }
 </style>
+
+
+<style type="text/css">
+body, td {
+   font-size: 25px;
+}
+code.r{
+  font-size: 20px;
+}
+pre {
+  font-size: 20px
+}
+</style>
 ---
-title: "Text Mining on The Name of The Wind"
+title: "Text Mining The Name of The Wind"
 author: "Omar Lopez Rubio"
 subtitle: Based on *Text Mining with R*
-output:
-  html_document:
-    fig_height: 15
-    fig_width: 18
 ---
 The Name of The Wind, by Patrick Rothfuss, is the first book in the trilogy
 *The Kingkiller Chronicle*. Since it came out 13 years ago, it has been
@@ -20,12 +29,13 @@ my favourite book.
 I recently finished the online book 
 [*Text Mining with R*](https://www.tidytextmining.com/), by Julia Silge and and David Robinson, so I wanted to make some analysis on this wonderful text, and try to put some of the new concepts I have on the tidyverse.
 
-First I'm going to do some cleaning on the text. Note that I'm going to filter `stop_words`(from the tidytext package) and also I'm going to remove some custom words that are not really significant for my analysis.
+First I'm going to do some cleaning on the text. Note that I'm going to filter `stop_words` (from the tidytext package) and also I'm going to remove some custom words that are not really significant for my analysis.
 A neat trick from the book, is that you can add a chapter regex in addition to cumsum.
 ```{r, message = FALSE}
 library(tidytext)
 library(tidyverse)
 knitr::opts_chunk$set(echo = TRUE, fig.align="center")
+knitr::opts_chunk$set(fig.width=12, fig.height=8) 
 
 notw <- as_tibble(read_delim("C:/Users/omarl/OneDrive/Escritorio/R/notw.txt",
                    delim = "\n", col_names = c("text")))
