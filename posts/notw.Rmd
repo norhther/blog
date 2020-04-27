@@ -1,10 +1,19 @@
-
+<style type="text/css">
+.main-container {
+  max-width: 1600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+</style>
 ---
 title: "Text Mining on The Name of The Wind"
 author: "Omar Lopez Rubio"
 subtitle: Based on *Text Mining with R*
+output:
+  html_document:
+    fig_height: 15
+    fig_width: 18
 ---
-
 The Name of The Wind, by Patrick Rothfuss, is the first book in the trilogy
 *The Kingkiller Chronicle*. Since it came out 13 years ago, it has been
 my favourite book.
@@ -16,6 +25,7 @@ A neat trick from the book, is that you can add a chapter regex in addition to c
 ```{r, message = FALSE}
 library(tidytext)
 library(tidyverse)
+knitr::opts_chunk$set(echo = TRUE, fig.align="center")
 
 notw <- as_tibble(read_delim("C:/Users/omarl/OneDrive/Escritorio/R/notw.txt",
                    delim = "\n", col_names = c("text")))
@@ -233,7 +243,8 @@ top_terms %>%
   scale_x_reordered() +
   labs(title = "Top 10 terms in each LDA topic",
        x = NULL, y = expression(beta)) +
-  facet_wrap(~ topic, ncol = 4, scales = "free")
+  facet_wrap(~ topic, ncol = 4, scales = "free") + 
+  theme(axis.text.x = element_text(angle=45, hjust=1))
 
 ```
 
