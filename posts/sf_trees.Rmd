@@ -1,0 +1,196 @@
+<style type="text/css">
+.main-container {
+  max-width: 1600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+</style>
+
+
+<style type="text/css">
+body, td {
+   font-size: 20px;
+}
+code.r{
+  font-size: 16px;
+}
+pre {
+  font-size: 16px
+}
+</style>
+
+--- 
+title: "San Francisco Trees"
+author: "Omar Lopez Rubio"
+subtitle: "Tidy Tuesday - 2020-01-28"
+---
+
+So this week we have some data on San Francisco trees.
+This week I'm more interested in plotting some fancy maps than in anything else, so I researched a little bit how to achieve it. I found a package
+called `leaflet`. It allows you to plot interactive maps using coordinates
+and also add markers to it. The markers are fully customizable.
+The only thing I didn't like is that I didn't find good docs about it.
+
+```{r, message=FALSE}
+library(tidyverse)
+knitr::opts_chunk$set(echo = TRUE, fig.align="center")
+knitr::opts_chunk$set(fig.width=12, fig.height=8) 
+
+sf_trees <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-01-28/sf_trees.csv')
+
+glimpse(sf_trees)
+
+trees <- sf_trees %>%
+  mutate_if(is.character, fct_explicit_na)
+
+```
+
+Basic data visualization and exploratory analysis
+
+```{r}
+trees %>%
+  count(species) %>%
+  arrange(n)
+```
+
+We have a lot of species with less than 100 observations, may be worth to 
+discard those samples.
+Let's take a look at `legal_status`
+
+```{r}
+trees %>%
+  count(legal_status, sort = TRUE)
+```
+Here we can see that it happens also with legal_status.
+I'm going to do some `geom_col()` plots for them and also the other variables, to get a better idea of the dataset.
+
+```{r}
+
+trees %>%
+  count(species, sort = TRUE) %>%
+  head(20) %>%
+  mutate(species = reorder(species, n)) %>%
+  ggplot(aes(x = species, y = n)) + geom_col() + coord_flip()
+
+
+trees %>%
+  count(legal_status, sort = TRUE) %>%
+  mutate(legal_status = reorder(legal_status, n)) %>%
+  ggplot(aes(x = legal_status, y = n)) + geom_col() + coord_flip()
+
+trees %>%
+  count(site_info, sort = TRUE) %>%
+  mutate(site_info = reorder(site_info, n)) %>%
+  ggplot(aes(x = site_info, y = n)) + geom_col() + coord_flip()
+
+trees %>%
+  count(caretaker, sort = TRUE) %>%
+  mutate(caretaker = reorder(caretaker, n)) %>%
+  ggplot(aes(x = caretaker, y = n)) + geom_col() + coord_flip()
+```
+
+So visually we can see that there are some factors that it's count is really low.
+For demonstration purposes, I'm going to use `fct_lump` to collapse a little bit the species column.
+
+```{r}
+trees_lump <- trees %>% 
+  mutate(species = fct_lump_min(species, 100))
+
+trees_lump %>% 
+  count(species, sort = TRUE)
+
+trees_lump %>%
+  filter(species == "Other")
+
+```
+
+I'm interested in check wheter the caretaker is private or not, so I'm going to create a new column to check it, and later make a model with `tidymodels`.
+
+```{r}
+trees_proc <- trees_lump %>%
+  mutate(isPrivate = case_when(
+    as.character(caretaker) == "Private" ~ as.character(caretaker),
+            TRUE ~ "Other")) %>%
+  filter(longitude > -125) %>%
+  select(-caretaker)
+
+trees_proc %>%
+  count(isPrivate, sort = TRUE)
+```
+
+Cool! Let's end the visualization making a plot with the `lat` and `long`
+For the sake of complexity and visualization, I'm only going to plot 2000 samples in the interactive plot, and 10000 in the static one.
+
+```{r}
+library(leaflet)
+
+set.seed(555)
+pal <- colorFactor(c("green", "navy"), domain = c("Other", "Private"))
+trees_proc %>%
+  sample_n(2000) %>%
+  leaflet() %>%
+  addTiles() %>%
+  addCircleMarkers(
+    radius = 0.5,
+    color = ~pal(isPrivate)
+  ) %>%
+  addLegend("bottomright", pal = pal, values = ~isPrivate,
+             title = "Caretaker type")
+
+trees_proc %>%
+  sample_n(10000) %>%
+  ggplot(aes(x=latitude, y = longitude, color = isPrivate)) + geom_point(alpha = 0.2) + theme_minimal()
+
+```
+Time to model things!
+I'm going to downsample `isPrivate`, because we are working with an unbalanced dataset.
+Also I'm gonna do a little bit more of preprocessing,
+`recipes` makes it really easy.
+In Julia Silge's screencast I saw how she used the `doParallel` library, 
+and after checking the package out I can't figure why I didn't use it until now.
+The training may take a while...
+```{r, message=FALSE}
+library(tidymodels)
+library(lubridate)
+
+trees_proc <- trees_proc %>%
+  mutate(site_order = as_factor(site_order)) %>%
+  mutate(site_order = fct_explicit_na(site_order, na_level = "-1"))
+
+trees_split <- initial_split(trees_proc)
+trees_train <- training(trees_split)
+trees_test <- testing(trees_split)
+
+trees_recipe <- trees_train %>%
+  recipe(isPrivate ~ .) %>%
+  update_role(address, new_role = "loc") %>%
+  update_role(tree_id, new_role = "id") %>%
+  step_rm(date, plot_size, dbh) %>%
+  step_downsample(isPrivate) %>%
+  step_dummy(all_predictors(), -all_outcomes(), -all_numeric()) %>%
+  prep()
+  
+
+trees_train <- juice(trees_recipe)
+trees_testing <- trees_recipe %>%
+  bake(trees_test)
+
+library(doParallel)
+doParallel::registerDoParallel()
+trees_ranger <- rand_forest(trees = 100, mode = "classification") %>%
+  set_engine("ranger", importance = "permutation") %>%
+  fit(isPrivate ~ ., data = trees_train)
+
+predict(trees_ranger, trees_testing)
+
+trees_ranger %>%
+  predict(trees_testing) %>%
+  bind_cols(trees_testing) %>%
+  metrics(truth = isPrivate, estimate = .pred_class)
+
+trees_ranger %>%
+  predict(trees_testing) %>%
+  count(.pred_class)
+```
+
+

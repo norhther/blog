@@ -14,5 +14,13 @@ In my spare time I like to play classical guitar, and also fence 🤺
 
 *"If you torture the data long enough, it will confess to anything"* - **Ronald H.Coase**
 
-## Data Science portfolio
+## Posts
 - [Text Mining The Name of The Wind](https://norhther.github.io/blog/posts/notw.html), tidyverse/tidytext approach (R) - 27/04/2020
+- [San Francisco Trees](https://norhther.github.io/blog/posts/sf_trees.html), 
+leaflet/tidyverse/tidymodels (R) - 28/01/2020
+
+## Projects
+*Under construction*
+
+## CV
+*Under construction* 
