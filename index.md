@@ -20,7 +20,11 @@ In my spare time I like to play classical guitar, and also fence 🤺
 leaflet/tidyverse/tidymodels (R) - 28/01/2020
 
 ## Projects
-*Under construction*
+- [My first try wiht Keras CNN. Potato or carrot?](https://github.com/norhther/patatapastanaga), (Python) - 2018
+- [PDDL planner for weekly menu](https://github.com/norhther/ricoricopddl/tree/master),
+(FF v2.3) - 2016
+*Under construction* 
+
 
 ## CV
 *Under construction* 
