@@ -28,4 +28,5 @@ leaflet/tidyverse/tidymodels (R) - 28/01/2020
 
 
 ## CV
-*Under construction* 
+- [Word](https://norhther.github.io/blog/resume/OmarLopezRubioResume.docx)
+- [PDF](https://norhther.github.io/blog/resume/OmarLopezRubioResume.pdf)
