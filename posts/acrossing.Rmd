@@ -28,6 +28,9 @@ This week Tidy Tuesday has bring some data from the last Animal Crossing game.
 
 ```{r, message = FALSE, warning=FALSE}
 library(tidyverse)
+knitr::opts_chunk$set(echo = TRUE, fig.align="center")
+knitr::opts_chunk$set(fig.width=12, fig.height=8) 
+
 
 critic <- readr::read_tsv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-05-05/critic.tsv')
 user_reviews <- readr::read_tsv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-05-05/user_reviews.tsv')
