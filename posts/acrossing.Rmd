@@ -1,0 +1,189 @@
+<style type="text/css">
+.main-container {
+  max-width: 1600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+</style>
+
+
+<style type="text/css">
+body, td {
+   font-size: 20px;
+}
+code.r{
+  font-size: 16px;
+}
+pre {
+  font-size: 16px
+}
+</style>
+---
+title: "Analyzing Animal Crossing Data"
+author: "Omar Lopez Rubio"
+subtitle: "Tidy Tuesday - 05/05/20"
+---
+
+This week Tidy Tuesday has bring some data from the last Animal Crossing game.
+
+```{r, message = FALSE, warning=FALSE}
+library(tidyverse)
+
+critic <- readr::read_tsv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-05-05/critic.tsv')
+user_reviews <- readr::read_tsv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-05-05/user_reviews.tsv')
+items <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-05-05/items.csv')
+
+```
+
+First of all I'm going to check the *critics* data. 
+```{r, message = FALSE, warning=FALSE}
+
+critic %>%
+  ggplot(aes(x = grade)) + geom_histogram(bins = 15)
+
+
+critic %>%
+  filter(str_length(text) == max(str_length(text))) %>%
+  pull(text)
+```
+
+Critic consists basically in a website name, a grade, a text review and a date. The grades are around 90 (0-100).
+The *text* column gives us a brief resum of the author's opinon about the game.
+It seems like a good opportinuty to use *tidytext*, don't agree?
+So let's do some sentiment analysis with the *afinn* sentiment dataset.
+
+```{r message=FALSE}
+
+library(tidytext)
+critic_tokens <- critic %>%
+  mutate(id = row_number()) %>%
+  unnest_tokens(word, text)
+
+critic_w_sentiments <- critic_tokens %>%
+  filter(!word %in% stop_words$word) %>%
+  inner_join(get_sentiments("afinn")) %>%
+  group_by(publication) %>%
+  summarize(total_sentiment = sum(value)) %>%
+  inner_join(critic) %>%
+  mutate(publication = as_factor(publication),
+         publication = fct_reorder(publication, total_sentiment))
+
+
+critic_w_sentiments %>%
+  arrange(desc(total_sentiment)) %>%
+  slice(c(head(row_number(), 10), tail(row_number(), 10))) %>%
+  ggplot(aes(x = publication, y = total_sentiment, fill = grade)) + 
+  geom_col() + 
+  coord_flip() + scale_fill_viridis_c(option = "inferno") + theme_light()
+
+```
+
+I like this plot. It shows us 20 reviews, the top 10 with highest *total_sentiment* and the bottom 10. Also it shows the *grade*, that is, the score given to the game. As we can see the reviews are positive, with a minimum at about 70. There is somehow a publication where the *total_sentiment* is negative. Let's check them out.
+
+```{r, message= FALSE}
+critic_w_sentiments %>%
+  arrange(desc(total_sentiment)) %>%
+  slice(tail(row_number(), 2))
+
+critic_w_sentiments %>%
+  arrange(desc(total_sentiment)) %>%
+  slice(tail(row_number(), 2)) %>%
+  head(2) %>%
+  pull(text)
+```
+
+Our simple approach cannot tell the underlaying meaning in some of these phrases. For instance, the first text is telling us a lot of "bad" words, and later it negates them to refeer to the game.
+I had to try it!
+
+```{r, message = FALSE}
+critic_w_sentiments %>%
+  summarize(sd = sd(grade),
+            mean = mean(grade))
+```
+
+So yeah, small standard deviation and a mean of 90.91, so overall really good critics from the media.
+
+Let's talk about the users. The users are not as polite as the media, and the opinions we're going to get are probably going to be more biased in personal experiences or moments than in the game itself.
+
+
+```{r, message = FALSE}
+
+user_reviews_tokens <- user_reviews %>%
+  unnest_tokens(word, text)
+
+user_w_sentiments <- user_reviews_tokens %>%
+  filter(!word %in% stop_words$word) %>%
+  inner_join(get_sentiments("afinn")) %>%
+  group_by(user_name) %>%
+  summarize(total_sentiment = sum(value)) %>%
+  inner_join(user_reviews)
+
+set.seed(42)
+user_w_sentiments %>%
+  sample_n(40) %>%
+  mutate(user_name = as_factor(user_name),
+         user_name = fct_reorder(user_name, total_sentiment)) %>%
+  ggplot(aes(x = user_name, y = total_sentiment, fill = grade)) + geom_col() + 
+  coord_flip() + scale_fill_viridis_c(option = "magma")
+```
+
+I sampled 40 random critics from the user, and there are lots of 0! Notice that now the scale is from 0 to 1. The *afinn* dataset approach now is doing a little bit better. User's reviews seems to be more simplistic, so there is where this simple approach shines.
+
+
+```{r message=FALSE} 
+
+user_w_sentiments %>%
+  ggplot(aes(x = grade, fill = total_sentiment > 0)) + geom_histogram(bins = 12)
+
+user_w_sentiments %>%
+  ggplot(aes(y = grade, x = total_sentiment > 0)) + geom_boxplot() + 
+  geom_jitter(alpha = 0.2)
+
+
+user_w_sentiments %>%
+  summarize(sd = sd(grade) * 10,
+            mean = mean(grade) * 10)
+```
+
+A really extreme distribution, as I can tell. With a sd of 43.2!
+Remember the previous one was 6.23
+
+Finally, let's check out the *items* data. I'm interested in the
+*category* and in the *sell_value*
+
+```{r}
+items %>%
+  mutate(sell_currency = replace_na(sell_currency, -1)) %>%
+  filter(sell_currency >= 0) %>%
+  ggplot(aes(x = category, y = sell_value)) + geom_boxplot() + 
+  coord_flip()
+```
+The boxplot went bananas. Let's reflect that plotting the *sd*.
+
+
+```{r message = FALSE}
+items %>%
+  group_by(category) %>%
+  filter(!is.na(sell_value)) %>%
+  summarize(sd = sd(sell_value)) %>%
+  arrange(desc(sd)) %>%   
+  mutate(category = as_factor(category),
+        category = fct_reorder(category, sd)) %>%
+  ggplot(aes(x = category, y = sd)) + geom_col() + coord_flip()
+
+```
+In the game, it seems like there are rare items that are really expensive. In game data, those outliers are a common thing. There is an exponential growth on how much money can a player generate against time. So, let's do a boxplot for two categories.
+```{r message = FALSE}
+items %>%
+  mutate(sell_currency = replace_na(sell_currency, -1)) %>%
+  filter(sell_currency >= 0,
+         category %in% c("Umbrellas", "Tops")) %>%
+  ggplot(aes(x = category, y = sell_value)) + geom_boxplot() + 
+  geom_jitter(alpha = 0.3) + 
+  coord_flip()
+```
+
+I have no more questions today, so my job here is done.
+Stay safe and thanks for reading!
+
+

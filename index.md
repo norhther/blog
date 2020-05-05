@@ -15,6 +15,7 @@ In my spare time I like to play classical guitar, and also fence 🤺
 *"If you torture the data long enough, it will confess to anything"* - **Ronald H.Coase**
 
 ## Posts
+- [Animal Crossing](https://norhther.github.io/blog/posts/acrossing.html), tidyverse/tidytext approach (R) - 05/05/2020
 - [Text Mining The Name of The Wind](https://norhther.github.io/blog/posts/notw.html), tidyverse/tidytext approach (R) - 27/04/2020
 - [San Francisco Trees](https://norhther.github.io/blog/posts/sf_trees.html), 
 leaflet/tidyverse/tidymodels (R) - 28/01/2020
@@ -26,7 +27,9 @@ leaflet/tidyverse/tidymodels (R) - 28/01/2020
 
 *Under construction* 
 
-
 ## CV
 - [Word](https://norhther.github.io/blog/resume/OmarLopezRubioResume.docx)
 - [PDF](https://norhther.github.io/blog/resume/OmarLopezRubioResume.pdf)
+
+## For recruiters
+- [Check some of my students reviews about me here!](https://www.tusclasesparticulares.com/profesores/omar-lopez-rubio/opiniones)
