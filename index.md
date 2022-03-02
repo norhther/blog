@@ -6,7 +6,7 @@
 Hi! My name is Omar, and I was born in Ibiza (Spain) in 1996.
 I studied Computer Science at Barcelona School of Informatics, a faculty of Universitat Politecnica de Catalunya, where I chose the Computation branch.
 
-My main interests right now are Statistics, Data Science (exploratory analyisis, visualization, etc.) and also Machine Learning modeling.
+My main interests are Statistics, Data Science (exploratory analyisis, visualization, etc.) and also Machine Learning modeling.
 
 I have been teaching, for 3 years, numerous languages to college students, including C, C++, Java, Python and R. Also I have conducted several courses in algorithmics and complexity analysis.
 
