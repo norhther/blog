@@ -20,10 +20,8 @@ In my spare time I like to play classical guitar, and also fence 🤺
 - [San Francisco Trees](https://norhther.github.io/blog/posts/sf_trees.html), 
 leaflet/tidyverse/tidymodels (R) - 28/01/2020
 
-## Projects
-- [My first try with Keras CNN. Potato or carrot?](https://github.com/norhther/patatapastanaga), (Python) - 2018
-- [PDDL planner for weekly menu](https://github.com/norhther/ricoricopddl/tree/master),
-(FF v2.3) - 2016
+## Publications
+- [Study of the Jaccard-Tanimoto kernel in SVM and its application to omic data](https://upcommons.upc.edu/handle/2117/361192)
 
 *Under construction* 
 
