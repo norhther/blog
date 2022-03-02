@@ -26,7 +26,7 @@ leaflet/tidyverse/tidymodels (R) - 28/01/2020
 *Under construction* 
 
 ## CV
-- [PDF](https://norhther.github.io/blog/resume/OmarLopezRubioResume.pdf)
+- [PDF](https://norhther.github.io/blog/OmarLopezRubioResume.pdf)
 
 ## For recruiters
 - [Check out some of my students' reviews](https://www.tusclasesparticulares.com/profesores/omar-lopez-rubio/opiniones)
