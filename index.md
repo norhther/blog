@@ -8,7 +8,7 @@ I studied Computer Science at Barcelona School of Informatics, a faculty of Univ
 
 My main interests right now are Statistics, Data Science (exploratory analyisis, visualization, etc.) and also Machine Learning modeling.
 
-I have been teaching, for 2 years now, numerous languages to college students, including C, C++, Java, Python and R. Also I have conducted several courses in algorithmics and complexity analysis.
+I have been teaching, for 3 years, numerous languages to college students, including C, C++, Java, Python and R. Also I have conducted several courses in algorithmics and complexity analysis.
 
 In my spare time I like to play classical guitar, and also fence 🤺
 
