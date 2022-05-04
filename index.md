@@ -14,11 +14,12 @@ In my spare time I like to play classical guitar, and also fence 🤺
 
 *"If you torture the data long enough, it will confess to anything"* - **Ronald H.Coase**
 
-## Posts
+## Things
 - [Animal Crossing](https://norhther.github.io/blog/posts/acrossing.html), tidyverse/tidytext approach (R) - 05/05/2020
 - [Text Mining The Name of The Wind](https://norhther.github.io/blog/posts/notw.html), tidyverse/tidytext approach (R) - 27/04/2020
 - [San Francisco Trees](https://norhther.github.io/blog/posts/sf_trees.html), 
 leaflet/tidyverse/tidymodels (R) - 28/01/2020
+- [How I took down a scammer website with 50 Python lines](https://github.com/norhther/VSScammers)
 
 ## Publications
 - [Study of the Jaccard-Tanimoto kernel in SVM and its application to omic data](https://upcommons.upc.edu/handle/2117/361192)
