@@ -20,7 +20,7 @@ In my spare time I like to play classical guitar, and also fence 🤺
 - [San Francisco Trees](https://norhther.github.io/blog/posts/sf_trees.html), 
 leaflet/tidyverse/tidymodels (R) - 28/01/2020
 - [How I took down a scammer website with 50 Python lines](https://github.com/norhther/VSScammers)
-- [Pathfinding visualization (BFS and DFS)] (https://www.youtube.com/watch?v=aFjs4Scljxo&ab_channel=Norhther)
+- [Pathfinding visualization with BFS and DFS] (https://www.youtube.com/watch?v=aFjs4Scljxo&ab_channel=Norhther)
 
 ## Publications
 - [Study of the Jaccard-Tanimoto kernel in SVM and its application to omic data](https://upcommons.upc.edu/handle/2117/361192)
